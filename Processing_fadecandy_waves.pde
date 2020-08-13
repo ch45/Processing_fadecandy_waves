@@ -12,7 +12,7 @@ public void setup() {
   background(0);
 
   // Connect to the local instance of fcserver
-  opc = new OPC(this, "middle", 7890);
+  opc = new OPC(this, "127.0.0.1", 7890);
 
   float spacing = min(height, width) / 16;
 
@@ -52,6 +52,6 @@ void setColourGraduated(int x, int y) {
 }
 
 void setColourGraduatedRoll(int x, int y, int mSec) {
-  int hue = (int) ((7.0 / 8.0 * 360.0 + 0.05 * mSec - 15.0 * sqrt(sq((float)x) + sq((float)y))) % (7.0 / 8.0 * 360.0));
-  fill(hue, 80, 40);
+  int hue = (int) ((7.0 / 8.0 * 360.0 + 0.04 * mSec - 15.0 * sqrt(sq((float)x - 7.5) + sq((float)y - 7.5))) % (7.0 / 8.0 * 360.0));
+  fill(hue, 60, 60);
 }
