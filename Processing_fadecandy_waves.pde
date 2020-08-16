@@ -31,10 +31,11 @@ public void setup() {
   xFocus = (boxesAcross * ledsAcross - 1) / 2;
   yFocus = (boxesDown * ledsDown - 1) / 2;
 
+  final int fudge =98; // Temporary, probably using the centre LED in the ledGrid8x8 method
   int ledCount = 0;
-  for (int x = 0; x < boxesAcross; x++) {
-    for (int y = 0; y < boxesDown; y++) {
-      opc.ledGrid8x8(ledCount, x0 + spacing * x * ledsAcross, y0 + spacing * y * ledsDown, spacing, 0, false, false);
+  for (int y = 0; y < boxesDown; y++) {
+    for (int x = 0; x < boxesAcross; x++) {
+      opc.ledGrid8x8(ledCount, x0 + spacing * x * ledsAcross + fudge, y0 + spacing * y * ledsDown + fudge, spacing, 0, false, false);
       ledCount += ledsAcross * ledsDown;
     }
   }
