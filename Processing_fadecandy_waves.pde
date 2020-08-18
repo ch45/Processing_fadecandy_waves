@@ -12,11 +12,11 @@ final int ledsDown = 8;
 float spacing;
 int x0;
 int y0;
-int xFocus;
-int yFocus;
+float xFocus;
+float yFocus;
 
 public void setup() {
-  size(720, 480);
+  size(720, 480, P2D);
 
   colorMode(HSB, 360, 100, 100);
 
@@ -28,14 +28,14 @@ public void setup() {
   spacing = (float)min(height / (boxesDown * ledsDown + 1), width / (boxesAcross * ledsAcross + 1));
   x0 = (int)(width - spacing * (boxesAcross * ledsAcross - 1)) / 2;
   y0 = (int)(height - spacing * (boxesDown * ledsDown - 1)) / 2;
-  xFocus = (boxesAcross * ledsAcross - 1) / 2;
-  yFocus = (boxesDown * ledsDown - 1) / 2;
+  xFocus = (boxesAcross * ledsAcross - 1) / 2.0;
+  yFocus = (boxesDown * ledsDown - 1) / 2.0;
 
-  final int fudge =98; // Temporary, probably using the centre LED in the ledGrid8x8 method
+  final int boxCentre = (int)((ledsAcross - 1) / 2.0 * spacing); // probably using the centre in the ledGrid8x8 method
   int ledCount = 0;
   for (int y = 0; y < boxesDown; y++) {
     for (int x = 0; x < boxesAcross; x++) {
-      opc.ledGrid8x8(ledCount, x0 + spacing * x * ledsAcross + fudge, y0 + spacing * y * ledsDown + fudge, spacing, 0, false, false);
+      opc.ledGrid8x8(ledCount, x0 + spacing * x * ledsAcross + boxCentre, y0 + spacing * y * ledsDown + boxCentre, spacing, 0, false, false);
       ledCount += ledsAcross * ledsDown;
     }
   }
@@ -43,11 +43,10 @@ public void setup() {
 
 public void draw() {
   int mSec = millis();
-
-  for (int x = 0; x < boxesAcross * ledsAcross; x++) {
-    for (int y = 0; y < boxesDown * ledsDown; y++) {
-        setColourGraduatedRoll(x, y, mSec);
-        circle(x0 + spacing * x, y0 + spacing * y, spacing / 2);
+  for (int y = 0; y < boxesDown * ledsDown; y++) {
+    for (int x = 0; x < boxesAcross * ledsAcross; x++) {
+      setColourGraduatedRoll(x, y, mSec);
+      circle(x0 + spacing * x, y0 + spacing * y, spacing / 2);
     }
   }
 }
