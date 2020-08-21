@@ -20,8 +20,6 @@ public void setup() {
 
   colorMode(HSB, 360, 100, 100);
 
-  background(0);
-
   // Connect to the local instance of fcserver
   opc = new OPC(this, "127.0.0.1", 7890);
 
@@ -42,6 +40,8 @@ public void setup() {
 }
 
 public void draw() {
+  background(0);
+
   int mSec = millis();
   for (int y = 0; y < boxesDown * ledsDown; y++) {
     for (int x = 0; x < boxesAcross * ledsAcross; x++) {
