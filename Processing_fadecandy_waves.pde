@@ -15,7 +15,11 @@ int y0;
 float xFocus;
 float yFocus;
 
+int exitTimer = 0;
+
 public void setup() {
+  apply_cmdline_args();
+
   size(720, 480, P2D);
 
   colorMode(HSB, 360, 100, 100);
@@ -49,6 +53,10 @@ public void draw() {
       circle(x0 + spacing * x, y0 + spacing * y, spacing / 2);
     }
   }
+
+  if (exitTimer > 0 && millis() / 1000 > exitTimer) {
+    exit();
+  }
 }
 
 void setColourGraduated(int x, int y) {
@@ -59,4 +67,21 @@ void setColourGraduated(int x, int y) {
 void setColourGraduatedRoll(int x, int y, int mSec) {
   int hue = (int) ((7.0 / 8.0 * 360.0 + 0.04 * mSec - 15.0 * sqrt(sq((float)x - xFocus) + sq((float)y - yFocus))) % (7.0 / 8.0 * 360.0));
   fill(hue, 60, 60);
+}
+
+
+void apply_cmdline_args()
+{
+  if (args == null) {
+    return;
+  }
+  for (String exp: args) {
+      String[] comp = exp.split("=");
+      switch (comp[0]) {
+        case "exit":
+          exitTimer = parseInt(comp[1], 10);
+          println("exit after " + exitTimer + "s");
+          break;
+      }
+  }
 }
